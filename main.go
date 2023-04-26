@@ -59,7 +59,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "此博客是用以记录编程笔记，如您有反馈或建议，请联系 "+
-		"<a href=\"mailto:summer@example.com\">summer@example.com</a>")
+		"<a href=\"mailto:1102389095@qq.com\">1102389095@qq.com</a>")
 }
 
 func notFoundHandler(w http.ResponseWriter, r *http.Request) {
