@@ -54,7 +54,7 @@ func checkError(err error) {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！</h1>")
+	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！ liu</h1>")
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
