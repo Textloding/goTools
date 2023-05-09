@@ -139,7 +139,7 @@ func checkError(err error) {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！ liu</h1>")
+	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！</h1>")
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
@@ -150,7 +150,7 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 func notFoundHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusNotFound)
-	fmt.Fprint(w, "<h1>请求页面未找到 :(</h1><p>如有疑惑，请联系我们。</p>")
+	fmt.Fprint(w, "<h1>请求页面未找到 :(</h1><p>如有疑惑，请联系我们修复。</p>")
 }
 
 // Article  对应一条文章数据
