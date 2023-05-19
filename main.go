@@ -27,7 +27,7 @@ func lpc() {
 	//这里是lpc提交的数据（230230519）
 }
 
-func jinhao(){
+func horJin() {
 	//这里是HorJin提交的数据
 }
 
