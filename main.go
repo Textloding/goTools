@@ -19,11 +19,15 @@ import (
 
 var router = mux.NewRouter()
 var db *sql.DB
+
 func liudelong() {
 	//这里是龙哥提交的数据
 }
 func lpc() {
 	//这里是lpc提交的数据（230230519）
+}
+func zhangjiahong() {
+	//这里是张嘉鸿提交的数据 感谢分享
 }
 
 func initDB() {
@@ -244,7 +248,7 @@ type ArticlesFormData struct {
 	Errors      map[string]string
 }
 
-//表单验证
+// 表单验证
 func validateArticleFormData(title string, body string) map[string]string {
 	errors := make(map[string]string)
 	// 验证标题
