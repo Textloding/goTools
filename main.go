@@ -26,9 +26,6 @@ func liudelong() {
 func lpc() {
 	//这里是lpc提交的数据（230230519）
 }
-func zhangjiahong() {
-	//这里是张嘉鸿提交的数据 感谢分享
-}
 
 func initDB() {
 	var err error
@@ -65,6 +62,7 @@ func checkError(err error) {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！ liu</h1>")
+	fmt.Fprint(w, "<h1>thanks for sharing zhangjiahong</h1>")
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
