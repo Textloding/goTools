@@ -19,6 +19,9 @@ import (
 
 var router = mux.NewRouter()
 var db *sql.DB
+func liudelong() {
+	//这里是龙哥提交的数据
+}
 
 func initDB() {
 	var err error
