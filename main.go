@@ -19,7 +19,6 @@ import (
 
 var router = mux.NewRouter()
 var db *sql.DB
-
 func liudelong() {
 	//这里是龙哥提交的数据
 }
@@ -58,9 +57,7 @@ func checkError(err error) {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！ liu</h1>")
-	fmt.Fprint(w, "<h1>thanks for sharing！ zhangjiahong</h1>")
-
+	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！ liu 吕（230230519）</h1>")
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
@@ -244,7 +241,7 @@ type ArticlesFormData struct {
 	Errors      map[string]string
 }
 
-// 表单验证
+//表单验证
 func validateArticleFormData(title string, body string) map[string]string {
 	errors := make(map[string]string)
 	// 验证标题
