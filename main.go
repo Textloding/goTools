@@ -31,6 +31,10 @@ func jinhao(){
 	//这里是HorJin提交的数据
 }
 
+func sbliubotao() {
+	//这里是谁提交的数据
+}
+
 func initDB() {
 	var err error
 	config := mysql.Config{
