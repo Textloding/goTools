@@ -27,6 +27,10 @@ func lpc() {
 	//这里是lpc提交的数据（230230519）
 }
 
+func jinhao(){
+	//这里是HorJin提交的数据
+}
+
 func initDB() {
 	var err error
 	config := mysql.Config{
