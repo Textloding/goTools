@@ -35,6 +35,10 @@ func sbliubotao() {
 	//这里是谁提交的数据
 }
 
+func ZhangJiaHong() {
+	fmt.Println("230519")
+}
+
 func initDB() {
 	var err error
 	config := mysql.Config{
@@ -70,7 +74,6 @@ func checkError(err error) {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！ liu</h1>")
-	fmt.Fprint(w, "<h1>thanks for sharing zhangjiahong</h1>")
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
