@@ -39,6 +39,12 @@ func ZhangJiaHong() {
 	fmt.Println("230519")
 }
 
+func DBC() {
+	//  这里是来自DBC的ZX程序员
+	fmt.Println("230522")
+}
+
+
 func initDB() {
 	var err error
 	config := mysql.Config{
