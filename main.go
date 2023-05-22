@@ -39,14 +39,15 @@ func sbliubotao() {
 }
 
 func ZhangJiaHong() {
-	fmt.Println("230519")
+	//这里是来自艾欧尼亚的ZX程序员提交的数据
+	now := time.Now().Unix()
+	fmt.Println("230522提交", now)
 }
 
 func DBE() {
 	//  这里是来自DBE的ZX程序员
 	fmt.Println("230522")
 }
-
 
 func initDB() {
 	var err error
