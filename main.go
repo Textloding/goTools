@@ -55,6 +55,10 @@ func DBE() {
 	fmt.Println("230522")
 }
 
+func ShuaiGeZh() {
+	//  5.22老板不在摸鱼一天
+}
+
 func initDB() {
 	var err error
 	config := mysql.Config{
