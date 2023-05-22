@@ -40,7 +40,7 @@ func huiLinYin () {
 	//2023-05-21 叫人红警 没人
 }
 
-func sbliubotao() {
+func sbLiuBoTao() {
 	//这里是谁提交的数据
 }
 
