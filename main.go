@@ -55,7 +55,7 @@ func DBE() {
 	fmt.Println("230522")
 }
 
-func ShuaiGeZh() {
+func shuaiGeZh() {
 	//  5.22老板不在摸鱼一天
 }
 
