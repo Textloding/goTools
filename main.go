@@ -22,6 +22,9 @@ var db *sql.DB
 
 func liudelong() {
 	//这里是龙哥提交的数据
+	//2023年5月22日10:01:28
+	//博涛周一周二来我家住了两天我胖了五斤,之后周三周四我把这五斤减掉了，周六晚上博涛来我家吃饭，今天周一我有胖了两斤。emmmm
+	//上周周五打麻将输了140 周日打麻将 输了100 emmmm
 }
 func lpc() {
 	//这里是lpc提交的数据（230230519）
@@ -34,6 +37,16 @@ func horJin() {
 func sbliubotao() {
 	//这里是谁提交的数据
 }
+
+func ZhangJiaHong() {
+	fmt.Println("230519")
+}
+
+func DBE() {
+	//  这里是来自DBE的ZX程序员
+	fmt.Println("230522")
+}
+
 
 func initDB() {
 	var err error
@@ -70,7 +83,6 @@ func checkError(err error) {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！ liu</h1>")
-	fmt.Fprint(w, "<h1>thanks for sharing zhangjiahong</h1>")
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
