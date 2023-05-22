@@ -35,7 +35,7 @@ func horJin() {
 	//这里是HorJin提交的数据
 }
 
-func huiLinYin () {
+func yinHuiLin () {
 	//2023-05-19 叫人三国杀 没人
 	//2023-05-20 叫人三国杀 没人
 	//2023-05-21 叫人红警 没人
