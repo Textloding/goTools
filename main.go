@@ -42,8 +42,8 @@ func ZhangJiaHong() {
 	fmt.Println("230519")
 }
 
-func DBC() {
-	//  这里是来自DBC的ZX程序员
+func DBE() {
+	//  这里是来自DBE的ZX程序员
 	fmt.Println("230522")
 }
 
