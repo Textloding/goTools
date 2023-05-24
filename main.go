@@ -60,6 +60,10 @@ func shuaiGeZh() {
 	//  5.22老板不在摸鱼一天
 }
 
+func nobody(){
+	//这是一个来自神秘人的神秘代码
+}
+
 func initDB() {
 	var err error
 	config := mysql.Config{
