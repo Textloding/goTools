@@ -55,9 +55,9 @@ func ZhangJiaHong() {
 	fmt.Println("230522提交", now)
 }
 
-func DBC() {
+func DBC529() {
 	//  这里是来自DBC的ZX程序员
-	
+
 	// 别动我代码！
 	fmt.Println("230522")
 }
