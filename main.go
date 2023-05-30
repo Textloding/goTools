@@ -44,6 +44,29 @@ func yinHuiLin () {
 	//2023-05-22 没叫
 	//2023-05-23 没叫
 	//2023-05-30 你狗叫什么？
+	func main() {
+    for i := 0; i < 10; i++ {
+        for j := 0; j < 10; j++ {
+            for k := 0; k < 10; k++ {
+                for l := 0; l < 10; l++ {
+                    for m := 0; m < 10; m++ {
+                        for n := 0; n < 10; n++ {
+                            for o := 0; o < 10; o++ {
+                                for p := 0; p < 10; p++ {
+                                    for q := 0; q < 10; q++ {
+                                        for r := 0; r < 10; r++ {
+                                            fmt.Printf("%d%d%d%d%d%d%d%d%d%d\n", i, j, k, l, m, n, o, p, q, r . sb张昊)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 }
 
 func sbLiuBoTao() {
