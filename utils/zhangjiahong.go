@@ -8,3 +8,8 @@ package utils
 func GetName() string {
 	return "张嘉鸿"
 }
+
+// GetSex 获取性别
+func GetSex() string {
+	return "男"
+}
