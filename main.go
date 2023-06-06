@@ -82,7 +82,7 @@ func ZhangJiaHong() {
 func DBC529() {
 	//  这里是来自DBC的ZX程序员
 
-	// 别动我代码！
+	//  今天也很无聊
 	fmt.Println("230522")
 }
 
