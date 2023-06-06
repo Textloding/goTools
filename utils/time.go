@@ -22,3 +22,8 @@ func GetUnixTime() int64 {
 func GetNormalTimeString(t time.Time) string {
 	return t.Format(TIMETEMPLATE1)
 }
+
+// 转为时间戳->秒数
+func GetTimeUnix(t time.Time) int64 {
+	return t.Unix()
+}
