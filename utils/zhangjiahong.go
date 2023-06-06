@@ -13,3 +13,8 @@ func GetName() string {
 func GetSex() string {
 	return "男"
 }
+
+// GetHeight 获取身高
+func GetHeight() int16 {
+	return 180
+}
