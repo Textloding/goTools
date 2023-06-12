@@ -84,6 +84,7 @@ func DBC529() {
 	//  这里是来自DBC的ZX程序员
 
 	//  今天也很无聊
+	//  gitlab 真不是个好东西 烦死
 	fmt.Println("230522")
 }
 
