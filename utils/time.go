@@ -27,3 +27,8 @@ func GetNormalTimeString(t time.Time) string {
 func GetTimeUnix(t time.Time) int64 {
 	return t.Unix()
 }
+
+// 转为时间戳->毫秒数
+func GetTimeMills(t time.Time) int64 {
+	return t.UnixNano() / 1e6
+}
