@@ -18,3 +18,8 @@ func GetSex() string {
 func GetHeight() int16 {
 	return 180
 }
+
+// GetWeight 获取体重
+func GetWeight() string {
+	return "84.8公斤"
+}
