@@ -70,7 +70,7 @@ func yinHuiLin () {
 		}
 	    }
 	}
-	好几天没提交了今天来说一句 sb张昊
+	//好几天没提交了今天来说一句 sb张昊
 }
 
 func sbLiuBoTao() {
