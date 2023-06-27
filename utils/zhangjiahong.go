@@ -23,3 +23,8 @@ func GetHeight() int16 {
 func GetWeight() string {
 	return "84.8公斤"
 }
+
+// GetLocationProvince 获取位置 省
+func GetLocationProvince() string {
+	return "浙江省"
+}
