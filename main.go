@@ -94,6 +94,39 @@ func yinHuiLin () {
 	    }
 	}
 	//好几天没提交了今天来说一句 sb张昊
+	<!-- <div id="app">
+        <h2 v-cloak>总价格：{{totalPrice}}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                books: [
+                    {id: 1, name: 'Unix编程艺术', price: 100},
+                    {id: 2, name: '代码大全', price: 200},
+                    {id: 3, name: '深入理解计算机原理', price: 300},
+                    {id: 4, name: '现代操作系统', price: 400},
+                ]
+            },
+            computed: {
+                totalPrice() {
+                    let result = 0
+                    for (let i = 0; i < this.books.length; i++) {
+                        result += this.books[i].price
+                    }
+                    // for (let i in this.books) {
+                    //     result += this.books[i].price
+                    // }
+                    // for (let i of this.books) {
+                    //     result += i.price
+                    // }
+                    return result
+                }
+            },
+            methods: {},
+        })
+    </script> -->
 }
 
 func sbLiuBoTao() {
