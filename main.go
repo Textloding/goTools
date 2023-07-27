@@ -67,69 +67,8 @@ func horJin() {
 }
 
 func yinHuiLin () {
-	//2023-05-19 叫人三国杀 没人
-	//2023-05-20 叫人三国杀 没人
-	//2023-05-21 叫人红警 没人
-	//2023-05-22 没叫
-	//2023-05-23 没叫
-	//2023-05-30 你狗叫什么？
-	func main() {
-	    for i := 0; i < 10; i++ {
-		for j := 0; j < 10; j++ {
-		    for k := 0; k < 10; k++ {
-			for l := 0; l < 10; l++ {
-			    for m := 0; m < 10; m++ {
-				for n := 0; n < 10; n++ {
-				    for o := 0; o < 10; o++ {
-					for p := 0; p < 10; p++ {
-					    for q := 0; q < 10; q++ {
-						for r := 0; r < 10; r++ {
-						    fmt.Printf("%d%d%d%d%d%d%d%d%d%d\n", i, j, k, l, m, n, o, p, q, r . sb张昊)
-						}
-					    }
-					}
-				    }
-				}
-			    }
-			}
-		    }
-		}
-	    }
-	}
-	//好几天没提交了今天来说一句 sb张昊
-	<!-- <div id="app">
-        <h2 v-cloak>总价格：{{totalPrice}}</h2>
-    </div>
-    <script src="../js/vue.js"></script>
-    <script>
-        const app = new Vue({
-            el: '#app',
-            data: {
-                books: [
-                    {id: 1, name: 'Unix编程艺术', price: 100},
-                    {id: 2, name: '代码大全', price: 200},
-                    {id: 3, name: '深入理解计算机原理', price: 300},
-                    {id: 4, name: '现代操作系统', price: 400},
-                ]
-            },
-            computed: {
-                totalPrice() {
-                    let result = 0
-                    for (let i = 0; i < this.books.length; i++) {
-                        result += this.books[i].price
-                    }
-                    // for (let i in this.books) {
-                    //     result += this.books[i].price
-                    // }
-                    // for (let i of this.books) {
-                    //     result += i.price
-                    // }
-                    return result
-                }
-            },
-            methods: {},
-        })
-    </script> -->
+	//2023-07-27
+		//今日办公室里顿悟，方知我是我。
 }
 
 func sbLiuBoTao() {
