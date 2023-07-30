@@ -102,6 +102,7 @@ func nobody(){
 	//s神秘代码被启用
 	//哈哈哈龙哥日记太有节目了
 	//new life
+	//最后一天
 }
 
 func initDB() {
