@@ -60,3 +60,33 @@ func study3(a, b int, c string) (int, error) {
 
 	}
 }
+
+// 力扣两数之和哈希表解法
+func twoSumHash(nums []int, target int) []int {
+	//创建键值都为整数的哈希表
+	hashTable := map[int]int{}
+	//遍历nums数组
+	for i, x := range nums {
+		//检查(target - x)是否存在哈希表中
+		if p, ok := hashTable[target-x]; ok {
+			//如果存在，返回两数索引
+			return []int{p, i}
+		}
+		//如果不存在，将当前元素x的值和索引i存进哈希表
+		hashTable[x] = i
+	}
+	return nil
+}
+
+// 力扣两数之和暴力解法
+func twoSum(nums []int, target int) []int {
+	//双重循环相加匹配结果
+	for i, x := range nums {
+		for j := i + 1; j < len(nums); j++ {
+			if x+nums[j] == target {
+				return []int{i, j}
+			}
+		}
+	}
+	return nil
+}
