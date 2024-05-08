@@ -119,6 +119,19 @@ func isValid(s string) bool {
 	return len(stack) == 0 // 如果栈为空，说明所有左括号都找到了匹配的右括号，返回 true；否则返回 false
 }
 
+// 35 搜索插入的位置
+func searchInsert(nums []int, target int) int {
+	//循环
+	for index, value := range nums {
+		//如果当前值大于或等于target直接输出index
+		if value >= target {
+			return index
+		}
+	}
+	//跳出循环代表数组内所有的数均小于target，那么直接插入最后一个位置
+	return len(nums)
+}
+
 // todo::leetcode 1652 拆炸弹 未理解
 // decrypt 函数用于解密给定的编码数组。
 // 参数 code 是需要解密的整数数组，k 是解密的偏移量。
