@@ -64,7 +64,7 @@ func study3(a, b int, c string) (int, error) {
 	}
 }
 
-// 力扣两数之和哈希表解法
+// 两数之和哈希表解法
 func twoSumHash(nums []int, target int) []int {
 
 	//创建键值都为整数的哈希表
@@ -82,7 +82,7 @@ func twoSumHash(nums []int, target int) []int {
 	return nil
 }
 
-// 力扣两数之和暴力解法
+// 两数之和暴力解法
 func twoSum(nums []int, target int) []int {
 	//双重循环相加匹配结果
 	for i, x := range nums {
@@ -132,7 +132,7 @@ func searchInsert(nums []int, target int) int {
 	return len(nums)
 }
 
-// todo::leetcode 1652 拆炸弹 未理解
+// todo:: 1652 拆炸弹 未理解
 // decrypt 函数用于解密给定的编码数组。
 // 参数 code 是需要解密的整数数组，k 是解密的偏移量。
 // 返回值是解密后的整数数组。
