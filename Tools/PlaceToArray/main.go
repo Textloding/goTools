@@ -25,10 +25,17 @@ func main() {
 func createMainWindow() (*walk.MainWindow, error) {
 	var mw *walk.MainWindow
 	var inColumn, inSheetName, inStartRow *walk.LineEdit
+	// 加载嵌入的资源图标
+	icon, err := walk.NewIconFromResourceId(2) // IDI_ICON1 默认为资源ID 1
+	if err != nil {
+		// 处理错误
+		panic(err)
+	}
 
 	if err := (MainWindow{
 		AssignTo: &mw,
 		Title:    "选择Excel文件",
+		Icon:     icon, // 设置图标
 		Size:     Size{Width: 400, Height: 300},
 		Layout:   VBox{},
 		Children: []Widget{
