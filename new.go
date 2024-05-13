@@ -7,6 +7,7 @@ import (
 )
 
 //2024.5.7 今天业务繁忙没写力扣没学产品，罪过罪过
+//2024.5.13 今天业务不繁忙搞了一天黑群晖但是又没写力扣没学产品没学一点GO，罪孽深重啊
 
 func main() {
 	//简单输出
@@ -37,6 +38,14 @@ func main() {
 
 func study1() string {
 	return "study1"
+}
+
+func cutMyhead(study bool) string {
+	if study == true {
+		return "很好很好，值得鼓励"
+	} else {
+		return "尼玛又没学习？拖出去车裂"
+	}
 }
 
 func study2(a, b int) int {
