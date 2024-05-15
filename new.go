@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
+	"os/exec"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -23,6 +26,9 @@ import (
 //5.我的竞争⽅案为什么能够在市场竞争中胜出？你不要简单地看单点的竞争 ⼒，⽽是要看点线⾯体，谁给你赋能。
 //6.⽤户会在什么样的场景触发情绪？需要马上去解决问题，这是场景问题。
 //7.当⽤户遇到问题的时候，他会想到哪个名字呢？
+//2024.5.13 今日看业务代码，第一次接触php执行cmd命令查看php的pid进程↓
+//$cmd = "ps  -e|grep  " . $task->pid . "|wc  -l";
+//$exists = trim(shell_exec("$cmd"), PHP_EOL);
 
 func main() {
 	//简单输出
@@ -53,6 +59,9 @@ func main() {
 	fmt.Println(theDay)
 
 	thisDay()
+
+	//根据进程名称循环打印出进程pid
+	cmdSearchPid("php")
 
 }
 
@@ -107,6 +116,47 @@ func thisDay() {
 		fmt.Println("今天是星期五")
 	case time.Saturday:
 		fmt.Println("今天是星期六")
+	}
+}
+
+// GetPidByProcessName 根据进程名称获取PID
+func GetPidByProcessName(processName string) ([]int, error) {
+	// 执行pidof命令
+	cmd := exec.Command("pidof", processName)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
+	if err != nil {
+		return nil, fmt.Errorf("failed to run pidof: %v", err)
+	}
+
+	// 分割输出，转换为整数切片
+	pids := strings.Fields(out.String())
+	result := make([]int, 0, len(pids))
+	for _, pidStr := range pids {
+		pid, err := strconv.Atoi(pidStr)
+		if err != nil {
+			return nil, fmt.Errorf("invalid PID '%s': %v", pidStr, err)
+		}
+		result = append(result, pid)
+	}
+	return result, nil
+}
+
+func cmdSearchPid(processName string) {
+	pids, err := GetPidByProcessName(processName)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	if len(pids) == 0 {
+		fmt.Println("No processes found with name", processName)
+	} else {
+		fmt.Println("PIDs for", processName, "are:")
+		for _, pid := range pids {
+			fmt.Println(pid)
+		}
 	}
 }
 
