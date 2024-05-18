@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"net"
+	"net/http"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -30,6 +32,7 @@ import (
 //$cmd = "ps  -e|grep  " . $task->pid . "|wc  -l";
 //$exists = trim(shell_exec("$cmd"), PHP_EOL);
 //2024.5.16 对接的文档跟屎一样，连分类都没有直接一个页装所有接口，我就想问问你以后这个接口都不维护吗，xxooxoxo的
+//2024.5.17 对接的文档就需要几个，我这边全封装了多干一堆，阿西吧，fuck
 
 func main() {
 	//简单输出
@@ -118,6 +121,31 @@ func thisDay() {
 	case time.Saturday:
 		fmt.Println("今天是星期六")
 	}
+}
+
+// 获取请求中的IP地址，优先从X-Real-IP头中获取，如果没有则从RemoteAddr中获取并解析
+func searchIp(r *http.Request) string {
+	// 首先检查X-Real-IP头，这通常在代理服务器设置中传递原始客户端IP
+	ipStr := r.Header.Get("X-Real-IP")
+	if ipStr != "" {
+		// 检查IP是否有效
+		realIp := net.ParseIP(strings.TrimSpace(ipStr))
+		if realIp != nil {
+			return realIp.String()
+		}
+	}
+
+	// 如果X-Real-IP无效或不存在，尝试从RemoteAddr中获取
+	host, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err == nil {
+		remoteIp := net.ParseIP(strings.TrimSpace(host))
+		if remoteIp != nil {
+			return remoteIp.String()
+		}
+	}
+
+	// 如果所有尝试都失败，返回空字符串表示无法获取IP
+	return ""
 }
 
 // GetPidByProcessName 根据进程名称获取PID
