@@ -73,3 +73,28 @@ func thisDay() {
         fmt.Println("今天是星期六")
     }
 }
+
+// 获取请求中的IP地址，优先从X-Real-IP头中获取，如果没有则从RemoteAddr中获取并解析
+func searchIp(r *http.Request) string {
+    // 首先检查X-Real-IP头，这通常在代理服务器设置中传递原始客户端IP
+    ipStr := r.Header.Get("X-Real-IP")
+    if ipStr != "" {
+        // 检查IP是否有效
+        realIp := net.ParseIP(strings.TrimSpace(ipStr))
+        if realIp != nil {
+            return realIp.String()
+        }
+    }
+
+    // 如果X-Real-IP无效或不存在，尝试从RemoteAddr中获取
+    host, _, err := net.SplitHostPort(r.RemoteAddr)
+    if err == nil {
+        remoteIp := net.ParseIP(strings.TrimSpace(host))
+        if remoteIp != nil {
+            return remoteIp.String()
+        }
+    }
+
+    // 如果所有尝试都失败，返回空字符串表示无法获取IP
+    return ""
+}
