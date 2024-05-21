@@ -98,3 +98,27 @@ func searchIp(r *http.Request) string {
     // 如果所有尝试都失败，返回空字符串表示无法获取IP
     return ""
 }
+
+// GetPidByProcessName 根据进程名称获取PID
+func GetPidByProcessName(processName string) ([]int, error) {
+    // 执行pidof命令
+    cmd := exec.Command("pidof", processName)
+    var out bytes.Buffer
+    cmd.Stdout = &out
+    err := cmd.Run()
+    if err != nil {
+        return nil, fmt.Errorf("failed to run pidof: %v", err)
+    }
+
+    // 分割输出，转换为整数切片
+    pids := strings.Fields(out.String())
+    result := make([]int, 0, len(pids))
+    for _, pidStr := range pids {
+        pid, err := strconv.Atoi(pidStr)
+        if err != nil {
+            return nil, fmt.Errorf("invalid PID '%s': %v", pidStr, err)
+        }
+        result = append(result, pid)
+    }
+    return result, nil
+}
