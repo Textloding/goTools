@@ -118,6 +118,9 @@ func main() {
 	//根据进程名称循环打印出进程pid
 	cmdSearchPid("php")
 
+	//调用同package包中的函数 package与php的namespace有些相似
+	router.HandleFunc("/articles/{id:[0-9]+}", articlesUpdateHandler).Methods("POST").Name("articles.update")
+
 }
 
 func study1() string {
