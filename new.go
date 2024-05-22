@@ -350,3 +350,35 @@ func decrypt(code []int, k int) []int {
 	}
 	return ans
 }
+
+// todo::14 未理解
+func longestCommonPrefix(strs []string) string {
+	if len(strs) == 0 {
+		return ""
+	}
+
+	// 假设第一个字符串是最长公共前缀的候选者
+	prefix := strs[0]
+
+	// 遍历字符串数组，更新最长公共前缀
+	for _, str := range strs[1:] {
+		// 使用 strings.Index 查找当前字符串中 prefix 的索引
+		// 如果找不到，或者索引不是 0，说明 prefix 不是公共前缀
+		// 更新 prefix 为当前公共前缀和 str 的公共部分
+		for strings.Index(str, prefix) != 0 {
+			// 如果 prefix 只有一个字符或者为空，那么直接返回
+			if len(prefix) == 0 {
+				return ""
+			}
+			// 去掉 prefix 的最后一个字符，继续查找
+			prefix = prefix[:len(prefix)-1]
+		}
+		// 如果 prefix 为空，则直接返回
+		if prefix == "" {
+			return ""
+		}
+	}
+
+	// 返回最长公共前缀
+	return prefix
+}
