@@ -122,3 +122,20 @@ func GetPidByProcessName(processName string) ([]int, error) {
     }
     return result, nil
 }
+
+func cmdSearchPid(processName string) {
+    pids, err := GetPidByProcessName(processName)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+
+    if len(pids) == 0 {
+        fmt.Println("No processes found with name", processName)
+    } else {
+        fmt.Println("PIDs for", processName, "are:")
+        for _, pid := range pids {
+            fmt.Println(pid)
+        }
+    }
+}
