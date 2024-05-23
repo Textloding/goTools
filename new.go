@@ -382,3 +382,42 @@ func longestCommonPrefix(strs []string) string {
 	// 返回最长公共前缀
 	return prefix
 }
+
+// 数字转字符串并提取身份证信息
+func extractDateFromInt(id int) string {
+	// 将整数转换为字符串
+	idStr := strconv.Itoa(id)
+
+	// 提取出生日期字符串
+	birthStr := idStr[6:14]
+
+	return birthStr
+}
+
+// 提取身份证信息并格式化出生日期
+func ExtractDateFromID(id string) (int, int, int, int, int, int, error) {
+	// 提取出生日期字符串
+	birthStr := id[6:14]
+
+	// 格式化出生日期
+	layout := "20060102" //layout为模板
+	parsedTime, err := time.Parse(layout, birthStr)
+	if err != nil {
+		return 0, 0, 0, 0, 0, 0, err
+	}
+
+	// 提取出生年、月、日
+	birthYear := parsedTime.Year()
+	birthMonth := int(parsedTime.Month())
+	birthDay := parsedTime.Day()
+
+	// 获取当前日期
+	now := time.Now()
+
+	// 提取当前年、月、日
+	currentYear := now.Year()
+	currentMonth := int(now.Month())
+	currentDay := now.Day()
+
+	return birthYear, birthMonth, birthDay, currentYear, currentMonth, currentDay, nil
+}
