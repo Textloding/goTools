@@ -400,7 +400,7 @@ func ExtractDateFromID(id string) (int, int, int, int, int, int, error) {
 	birthStr := id[6:14]
 
 	// 格式化出生日期
-	layout := "20060102" //layout为模板
+	layout := "20060102" //layout为时间模板
 	parsedTime, err := time.Parse(layout, birthStr)
 	if err != nil {
 		return 0, 0, 0, 0, 0, 0, err
@@ -420,4 +420,9 @@ func ExtractDateFromID(id string) (int, int, int, int, int, int, error) {
 	currentDay := now.Day()
 
 	return birthYear, birthMonth, birthDay, currentYear, currentMonth, currentDay, nil
+}
+
+func setNum(num int) (int, error) {
+	num++
+	return num, nil
 }
