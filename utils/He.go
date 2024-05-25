@@ -170,3 +170,27 @@ func twoSum(nums []int, target int) []int {
     }
     return nil
 }
+
+// 20 有效的括号
+// 该方法只能按序判断并且必须左括号开头
+func isValid(s string) bool {
+    stack := make([]rune, 0) // 创建一个空的 rune 切片作为栈，用于存储待匹配的右括号
+
+    for _, ch := range s { // 遍历输入字符串 s 中的每个字符
+        switch ch { // 使用 switch 语句来判断当前字符的类型
+        case '(': // 如果字符是左小括号 '('
+            stack = append(stack, ')') // 将对应的右小括号 ')' 压入栈中
+        case '{': // 如果字符是左大括号 '{'
+            stack = append(stack, '}') // 将对应的右大括号 '}' 压入栈中
+        case '[': // 如果字符是左方括号 '['
+            stack = append(stack, ']') // 将对应的右方括号 ']' 压入栈中
+        case ')', '}', ']': // 如果字符是右括号（')', '}', ']'）之一
+            if len(stack) == 0 || stack[len(stack)-1] != ch { // 检查栈是否为空，或者栈顶元素是否与当前右括号匹配
+                return false // 如果不匹配，返回 false
+            }
+            stack = stack[:len(stack)-1] // 弹出栈顶元素（即已匹配的右括号）
+        }
+    }
+
+    return len(stack) == 0 // 如果栈为空，说明所有左括号都找到了匹配的右括号，返回 true；否则返回 false
+}
