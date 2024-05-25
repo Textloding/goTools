@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"math/rand"
 	"net"
 	"net/http"
 	"os/exec"
@@ -85,7 +86,31 @@ import (
 // *
 // */
 
+// Dish 是一个美食结构体，用于存储美食名称
+type Dish struct {
+	Name string
+}
+
+// dishes 是一个 Dish 切片，包含了多种美食
+var dishes = []Dish{
+	{Name: "北京烤鸭"},
+	{Name: "麻婆豆腐"},
+	{Name: "宫保鸡丁"},
+	{Name: "小笼包"},
+	{Name: "重庆火锅"},
+	{Name: "阳春白雪"},
+	{Name: "东坡肉"},
+	{Name: "西湖醋鱼"},
+	{Name: "炸酱面"},
+	{Name: "糖醋排骨"},
+	{Name: "猪脚饭"},
+	{Name: "排骨饭"},
+}
+
 func main() {
+	// 调用 GetRandomDish 函数并打印结果
+	dish := GetRandomDish()
+	fmt.Printf("今天的推荐美食是：%s\n", dish.Name)
 	//简单输出
 	//Printf函数用于格式化输出，它接受一个格式化字符串作为第一个参数，后面跟着一系列可变参数，这些参数将按照格式化字符串中的占位符被替换并输出。
 	//格式化字符串中可以包含占位符（如%d、%s、%f等），用于指定要插入值的类型和格式。
@@ -119,7 +144,7 @@ func main() {
 	cmdSearchPid("php")
 
 	//调用同package包中的函数 package与php的namespace有些相似
-	router.HandleFunc("/articles/{id:[0-9]+}", articlesUpdateHandler).Methods("POST").Name("articles.update")
+	//router.HandleFunc("/articles/{id:[0-9]+}", articlesUpdateHandler).Methods("POST").Name("articles.update")
 
 }
 
@@ -425,4 +450,20 @@ func ExtractDateFromID(id string) (int, int, int, int, int, int, error) {
 func setNum(num int) (int, error) {
 	num++
 	return num, nil
+}
+
+// 今天吃什么
+// GetRandomDish 返回 dishes 切片中的一个随机美食
+func GetRandomDish() Dish {
+	// 初始化随机数种子，确保每次运行的结果不同
+	rand.Seed(time.Now().UnixNano())
+
+	// 获取切片的长度
+	lenDishes := len(dishes)
+
+	// 生成一个0到lenDishes-1之间的随机索引
+	randomIndex := rand.Intn(lenDishes)
+
+	// 返回该索引对应的美食
+	return dishes[randomIndex]
 }
