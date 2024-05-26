@@ -2,8 +2,10 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"net"
 	"net/http"
@@ -135,7 +137,7 @@ func main() {
 		//当调用 study3(1, 2, "**") 控制台输出 Error: 您的计算符号**不正确 study3 123
 	}
 
-	theDay := cutMyhead(false)
+	theDay := cutMyhead(true)
 	fmt.Println(theDay)
 
 	thisDay()
@@ -145,6 +147,25 @@ func main() {
 
 	//调用同package包中的函数 package与php的namespace有些相似
 	//router.HandleFunc("/articles/{id:[0-9]+}", articlesUpdateHandler).Methods("POST").Name("articles.update")
+
+	//发送post请求
+	// 要发送的数据（可以是任何实现了json.Marshaler接口的结构体或map）
+	data := map[string]interface{}{
+		"name":  "John Doe",
+		"email": "john@example.com",
+		// 可以添加更多字段
+	}
+
+	// 发送POST请求并处理响应
+	url := "http://example.com/api/endpoint"
+	responseBody, err := postJSON(url, data)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	// 打印响应体
+	fmt.Println("Response:", responseBody)
 
 }
 
@@ -230,7 +251,8 @@ func searchIp(r *http.Request) string {
 // GetPidByProcessName 根据进程名称获取PID
 func GetPidByProcessName(processName string) ([]int, error) {
 	// 执行pidof命令
-	cmd := exec.Command("pidof", processName)
+	//cmd := exec.Command("pidof", processName)
+	cmd := exec.Command("tasklist", "/NH", "/FI", "IMAGENAME eq "+processName) // /NH去除标题行，/FI "IMAGENAME eq" 过滤进程名
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err := cmd.Run()
@@ -466,4 +488,39 @@ func GetRandomDish() Dish {
 
 	// 返回该索引对应的美食
 	return dishes[randomIndex]
+}
+
+// 发送post请求
+func postJSON(url string, data interface{}) (string, error) {
+	// 将数据转换为JSON格式
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		return "", fmt.Errorf("Error marshalling JSON: %w", err)
+	}
+
+	// 创建一个HTTP请求
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		return "", fmt.Errorf("Error creating request: %w", err)
+	}
+
+	// 设置请求头，指定内容类型为JSON
+	req.Header.Set("Content-Type", "application/json")
+
+	// 发送请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("Error sending request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("Error reading response body: %w", err)
+	}
+
+	// 返回响应体字符串
+	return string(body), nil
 }
