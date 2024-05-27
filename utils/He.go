@@ -194,3 +194,20 @@ func isValid(s string) bool {
 
     return len(stack) == 0 // 如果栈为空，说明所有左括号都找到了匹配的右括号，返回 true；否则返回 false
 }
+
+func cmdSearchProcess(processNames string) {
+    ps, err := GetPidByProcessName(processNames)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+
+    if len(ps) == 0 {
+        fmt.Println("No processes found with name", processNames)
+    } else {
+        fmt.Println("PIDs for", processNames, "are:")
+        for _, pid := range ps {
+            fmt.Println(pid)
+        }
+    }
+}
