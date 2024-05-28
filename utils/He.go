@@ -211,3 +211,21 @@ func cmdSearchProcess(processNames string) {
         }
     }
 }
+
+// 两数之和哈希表解法
+func sumHash(nums []int, target int) []int {
+
+    //创建键值都为整数的哈希表
+    hashTable := map[int]int{}
+    //遍历nums数组
+    for i, x := range nums {
+        //检查(target - x)是否存在哈希表中
+        if p, ok := hashTable[target-x]; ok {
+            //如果存在，返回两数索引
+            return []int{p, i}
+        }
+        //如果不存在，将当前元素x的值和索引i存进哈希表
+        hashTable[x] = i
+    }
+    return nil
+}
