@@ -229,3 +229,16 @@ func sumHash(nums []int, target int) []int {
     }
     return nil
 }
+
+// 两数之和暴力解法
+func twoSum(nums []int, target int) []int {
+    //双重循环相加匹配结果
+    for i, x := range nums {
+        for j := i + 1; j < len(nums); j++ {
+            if x+nums[j] == target {
+                return []int{i, j}
+            }
+        }
+    }
+    return nil
+}
