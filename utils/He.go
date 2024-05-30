@@ -211,3 +211,58 @@ func cmdSearchProcess(processNames string) {
         }
     }
 }
+
+// 两数之和哈希表解法
+func sumHash(nums []int, target int) []int {
+
+    //创建键值都为整数的哈希表
+    hashTable := map[int]int{}
+    //遍历nums数组
+    for i, x := range nums {
+        //检查(target - x)是否存在哈希表中
+        if p, ok := hashTable[target-x]; ok {
+            //如果存在，返回两数索引
+            return []int{p, i}
+        }
+        //如果不存在，将当前元素x的值和索引i存进哈希表
+        hashTable[x] = i
+    }
+    return nil
+}
+
+// 两数之和暴力解法
+func twoSum(nums []int, target int) []int {
+    //双重循环相加匹配结果
+    for i, x := range nums {
+        for j := i + 1; j < len(nums); j++ {
+            if x+nums[j] == target {
+                return []int{i, j}
+            }
+        }
+    }
+    return nil
+}
+
+// 20 有效的括号
+// 该方法只能按序判断并且必须左括号开头
+func isValid(s string) bool {
+    stack := make([]rune, 0) // 创建一个空的 rune 切片作为栈，用于存储待匹配的右括号
+
+    for _, ch := range s { // 遍历输入字符串 s 中的每个字符
+        switch ch { // 使用 switch 语句来判断当前字符的类型
+        case '(': // 如果字符是左小括号 '('
+            stack = append(stack, ')') // 将对应的右小括号 ')' 压入栈中
+        case '{': // 如果字符是左大括号 '{'
+            stack = append(stack, '}') // 将对应的右大括号 '}' 压入栈中
+        case '[': // 如果字符是左方括号 '['
+            stack = append(stack, ']') // 将对应的右方括号 ']' 压入栈中
+        case ')', '}', ']': // 如果字符是右括号（')', '}', ']'）之一
+            if len(stack) == 0 || stack[len(stack)-1] != ch { // 检查栈是否为空，或者栈顶元素是否与当前右括号匹配
+                return false // 如果不匹配，返回 false
+            }
+            stack = stack[:len(stack)-1] // 弹出栈顶元素（即已匹配的右括号）
+        }
+    }
+
+    return len(stack) == 0 // 如果栈为空，说明所有左括号都找到了匹配的右括号，返回 true；否则返回 false
+}
