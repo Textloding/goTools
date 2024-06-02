@@ -212,6 +212,27 @@ func study3(a, b int, c string) (int, error) {
 	}
 }
 
+func study4(a, b int, s string) (int, error) {
+	switch s {
+	case "加":
+		return a + b, nil
+	case "减":
+		return a - b, nil
+	case "乘":
+		return a * b, nil
+	case "除":
+		if b == 0 {
+			//errors.New 简单报错不能用占位符
+			return 0, errors.New("除数不能为0" + strconv.Itoa(b))
+		}
+		return a / b, nil
+	default:
+		//fmt.Errorf 复杂报错，可以使用占位符和报错
+		return 0, fmt.Errorf("您的计算符号%s不正确", s)
+
+	}
+}
+
 func thisDay() {
 	switch time.Now().Weekday() {
 	case time.Monday:
