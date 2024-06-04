@@ -279,3 +279,43 @@ func searchInsert(nums []int, target int) int {
     //跳出循环代表数组内所有的数均小于target，那么直接插入最后一个位置
     return len(nums)
 }
+
+// todo:: 1652 拆炸弹 未理解
+// decrypt 函数用于解密给定的编码数组。
+// 参数 code 是需要解密的整数数组，k 是解密的偏移量。
+// 返回值是解密后的整数数组。
+func decrypt(code []int, k int) []int {
+    // 计算数组长度
+    n := len(code)
+    // 创建一个长度为 n 的整数切片，并初始化为全 0
+    ans := make([]int, n)
+    // 如果偏移量 k 为 0，则直接返回全 0 的切片
+    if k == 0 {
+        return ans
+    }
+    // 将 code 数组复制一份并拼接到原数组后面，以处理循环解密
+    code = append(code, code...)
+    // 初始化双指针 l 和 r，用于选择每次解密的子数组
+    l, r := 1, k
+    // 如果偏移量 k 为负数，调整指针 l 和 r 的初始位置以从数组末尾开始解密
+    if k < 0 {
+        l, r = n+k, n-1
+    }
+    // 初始化累积和变量，用于计算每次解密子数组的和
+    sum := 0
+    // 计算初始子数组的和
+    for _, v := range code[l : r+1] {
+        sum += v
+    }
+    // 遍历切片，解密每个位置的元素
+    for i := range ans {
+        // 将初始子数组的和赋值给每个位置
+        ans[i] = sum
+        // 更新累积和：减去左指针的元素，加上右指针下一个元素
+        sum -= code[l]
+        sum += code[r+1]
+        // 移动指针
+        l, r = l+1, r+1
+    }
+    return ans
+}
