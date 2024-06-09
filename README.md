@@ -1,10 +1,12 @@
-# goblog
+# goTools For Windows
 
-基于go的博客
+基于go的windows实用GUI工具集
 
-# 启动air自动重载
-
-``$ air``
+- Tools/GetIpApp 获取本机IP
+- Tools/PlaceToArray 提取指定省市区以及省市区编码转化为三维数组并复制到剪贴板
+- Tools/TableToArray 将表格数据提取转化为一维数组并复制到剪贴板
+- Tools/TimedShutdown 定时睡眠以及关机
+`
 
 # Tools文件夹为脚本工具
 只适用于windows系统，内含已打包的可执行二进制文件
