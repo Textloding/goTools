@@ -351,3 +351,30 @@ func longestCommonPrefix(strs []string) string {
     // 返回最长公共前缀
     return prefix
 }
+
+func ExtractDateFromID(id string) (int, int, int, int, int, int, error) {
+    // 提取出生日期字符串
+    birthStr := id[6:14]
+
+    // 格式化出生日期
+    layout := "20060102" //layout为时间模板
+    parsedTime, err := time.Parse(layout, birthStr)
+    if err != nil {
+        return 0, 0, 0, 0, 0, 0, err
+    }
+
+    // 提取出生年、月、日
+    birthYear := parsedTime.Year()
+    birthMonth := int(parsedTime.Month())
+    birthDay := parsedTime.Day()
+
+    // 获取当前日期
+    now := time.Now()
+
+    // 提取当前年、月、日
+    currentYear := now.Year()
+    currentMonth := int(now.Month())
+    currentDay := now.Day()
+
+    return birthYear, birthMonth, birthDay, currentYear, currentMonth, currentDay, nil
+}
