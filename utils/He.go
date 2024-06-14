@@ -378,3 +378,18 @@ func ExtractDateFromID(id string) (int, int, int, int, int, int, error) {
 
     return birthYear, birthMonth, birthDay, currentYear, currentMonth, currentDay, nil
 }
+
+// GetRandomDish 返回 dishes 切片中的一个随机美食
+func GetRandomDish() Dish {
+    // 初始化随机数种子，确保每次运行的结果不同
+    rand.Seed(time.Now().UnixNano())
+
+    // 获取切片的长度
+    lenDishes := len(dishes)
+
+    // 生成一个0到lenDishes-1之间的随机索引
+    randomIndex := rand.Intn(lenDishes)
+
+    // 返回该索引对应的美食
+    return dishes[randomIndex]
+}
