@@ -5,7 +5,9 @@ import (
 	"image"
 	"image/color"
 	"log"
+	"math/rand"
 	"strconv"
+	"time"
 
 	"github.com/lxn/walk"
 	. "github.com/lxn/walk/declarative"
@@ -86,7 +88,7 @@ func main() {
 			},
 			ComboBox{
 				AssignTo: &unitDropdown,
-				Model:    []string{"像素", "厘米"},
+				Model:    []string{"像素", "厘米", "毫米"},
 				Visible:  false,
 			},
 			Composite{
@@ -134,13 +136,13 @@ func main() {
 
 func processImage() {
 	if imagePath == "" {
-		log.Println("No image selected")
+		log.Println("没有找到图片")
 		return
 	}
 
 	img := gocv.IMRead(imagePath, gocv.IMReadColor)
 	if img.Empty() {
-		log.Fatalf("failed to read image from: %s", imagePath)
+		log.Fatalf("加载图片失败: %s", imagePath)
 		return
 	}
 	defer img.Close()
@@ -172,6 +174,11 @@ func processImage() {
 			height = int(float64(height) * 37.7953)
 		}
 
+		if unit == "毫米" {
+			width = int(float64(width) * 3.77953) // 1mm = 3.77953 pixels
+			height = int(float64(height) * 3.77953)
+		}
+
 		targetWidth = width
 		targetHeight = height
 	}
@@ -193,8 +200,24 @@ func processImage() {
 
 	gocv.AddWeighted(newImg, 1, bgColor, 1, 0, &newImg)
 
-	if ok := gocv.IMWrite("output.jpg", newImg); !ok {
-		log.Fatalf("failed to save image to: %s", "output.jpg")
+	fileName := generateUniqueFileName("jpg")
+	if ok := gocv.IMWrite(fileName, newImg); !ok {
+		log.Fatalf("保存图片失败: %s", fileName)
 	}
-	fmt.Println("Image processed and saved as output.jpg")
+	fmt.Println("图片保存成功： " + fileName)
+}
+
+// 生成基于时间戳和随机数的唯一文件名
+func generateUniqueFileName(extension string) string {
+	// 获取当前时间戳
+	timestamp := time.Now().UnixNano()
+
+	// 生成随机数
+	randomNum := rand.Int63()
+
+	// 组合时间戳和随机数以生成唯一ID
+	uniqueID := fmt.Sprintf("%d_%d", timestamp, randomNum)
+
+	// 添加文件扩展名
+	return uniqueID + "." + extension
 }
