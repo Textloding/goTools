@@ -428,3 +428,7 @@ func postJSON(url string, data interface{}) (string, error) {
     // 返回响应体字符串
     return string(body), nil
 }
+
+func GetTime() time.Time {
+    return time.Now()
+}
