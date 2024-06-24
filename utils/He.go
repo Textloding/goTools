@@ -484,3 +484,8 @@ func downloadZip(url string, file string, timeout int) (string, error) {
 
     return file, nil
 }
+
+// GetLocationProvince 获取位置 省
+func GetLocationProvince() string {
+    return "浙江省"
+}
