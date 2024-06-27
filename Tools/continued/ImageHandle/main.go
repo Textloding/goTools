@@ -50,7 +50,7 @@ func main() {
 					}
 					imagePath = dlg.FilePath
 
-					img, err := walk.NewImageFromFile(imagePath)
+					img, err := walk.NewBitmapFromFile(imagePath)
 					if err != nil {
 						log.Println("Error loading image:", err)
 						return
@@ -142,7 +142,7 @@ func processImage() {
 
 	img := gocv.IMRead(imagePath, gocv.IMReadColor)
 	if img.Empty() {
-		log.Fatalf("加载图片失败: %s", imagePath)
+		log.Println("加载图片失败: ", imagePath)
 		return
 	}
 	defer img.Close()
@@ -207,17 +207,9 @@ func processImage() {
 	fmt.Println("图片保存成功： " + fileName)
 }
 
-// 生成基于时间戳和随机数的唯一文件名
 func generateUniqueFileName(extension string) string {
-	// 获取当前时间戳
 	timestamp := time.Now().UnixNano()
-
-	// 生成随机数
 	randomNum := rand.Int63()
-
-	// 组合时间戳和随机数以生成唯一ID
 	uniqueID := fmt.Sprintf("%d_%d", timestamp, randomNum)
-
-	// 添加文件扩展名
 	return uniqueID + "." + extension
 }
