@@ -541,3 +541,38 @@ func downloadZip(url string, file string, timeout int) (string, error) {
 
 	return file, nil
 }
+
+// 发送post请求
+func postJSON(url string, data interface{}) (string, error) {
+	// 将数据转换为JSON格式
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		return "", fmt.Errorf("Error marshalling JSON: %w", err)
+	}
+
+	// 创建一个HTTP请求
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		return "", fmt.Errorf("Error creating request: %w", err)
+	}
+
+	// 设置请求头，指定内容类型为JSON
+	req.Header.Set("Content-Type", "application/json")
+
+	// 发送请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("Error sending request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("Error reading response body: %w", err)
+	}
+
+	// 返回响应体字符串
+	return string(body), nil
+}
