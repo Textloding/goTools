@@ -22,16 +22,17 @@ var (
 	widthLineEdit   *walk.LineEdit
 	heightLineEdit  *walk.LineEdit
 	imageView       *walk.ImageView
-	radioGroup      *walk.RadioButtonGroup
 	sizeDropdown    *walk.ComboBox
 	unitDropdown    *walk.ComboBox
-	colorDialog     *walk.ColorDialog
+	rLineEdit       *walk.LineEdit
+	gLineEdit       *walk.LineEdit
+	bLineEdit       *walk.LineEdit
 )
 
 func main() {
 	var mw *walk.MainWindow
 
-	MainWindow{
+	if err := (MainWindow{
 		AssignTo: &mw,
 		Title:    "Image Processor",
 		MinSize:  Size{Width: 600, Height: 400},
@@ -112,13 +113,36 @@ func main() {
 					},
 				},
 			},
+			Composite{
+				Layout: HBox{},
+				Children: []Widget{
+					Label{Text: "R:"},
+					LineEdit{AssignTo: &rLineEdit},
+					Label{Text: "G:"},
+					LineEdit{AssignTo: &gLineEdit},
+					Label{Text: "B:"},
+					LineEdit{AssignTo: &bLineEdit},
+				},
+			},
 			PushButton{
-				Text: "选择背景颜色",
+				Text: "设置背景颜色",
 				OnClicked: func() {
-					if colorDialog.Show(mw) == walk.DlgCmdOK {
-						selectedColor := colorDialog.Color()
-						backgroundColor = color.RGBA{R: uint8(selectedColor.R), G: uint8(selectedColor.G), B: uint8(selectedColor.B), A: 255}
+					r, err := strconv.Atoi(rLineEdit.Text())
+					if err != nil || r < 0 || r > 255 {
+						log.Println("无效的红色值")
+						return
 					}
+					g, err := strconv.Atoi(gLineEdit.Text())
+					if err != nil || g < 0 || g > 255 {
+						log.Println("无效的绿色值")
+						return
+					}
+					b, err := strconv.Atoi(bLineEdit.Text())
+					if err != nil || b < 0 || b > 255 {
+						log.Println("无效的蓝色值")
+						return
+					}
+					backgroundColor = color.RGBA{uint8(r), uint8(g), uint8(b), 255}
 				},
 			},
 			PushButton{
@@ -131,12 +155,16 @@ func main() {
 				AssignTo: &imageView,
 			},
 		},
-	}.Run()
+	}).Create(); err != nil {
+		log.Fatal(err)
+	}
+
+	mw.Run()
 }
 
 func processImage() {
 	if imagePath == "" {
-		log.Println("没有找到图片")
+		log.Println("没有选择图片")
 		return
 	}
 
@@ -160,21 +188,19 @@ func processImage() {
 		unit := unitDropdown.Text()
 		width, err := strconv.Atoi(widthLineEdit.Text())
 		if err != nil {
-			log.Println("Invalid width")
+			log.Println("宽度无效")
 			return
 		}
 		height, err := strconv.Atoi(heightLineEdit.Text())
 		if err != nil {
-			log.Println("Invalid height")
+			log.Println("高度无效")
 			return
 		}
 
 		if unit == "厘米" {
 			width = int(float64(width) * 37.7953) // 1cm = 37.7953 pixels
 			height = int(float64(height) * 37.7953)
-		}
-
-		if unit == "毫米" {
+		} else if unit == "毫米" {
 			width = int(float64(width) * 3.77953) // 1mm = 3.77953 pixels
 			height = int(float64(height) * 3.77953)
 		}
@@ -189,6 +215,7 @@ func processImage() {
 
 	newImg := gocv.NewMatWithSize(targetHeight, targetWidth, gocv.MatTypeCV8UC3)
 	defer newImg.Close()
+
 	bgColor := gocv.NewMatWithSizeFromScalar(gocv.NewScalar(float64(backgroundColor.B), float64(backgroundColor.G), float64(backgroundColor.R), 0), targetHeight, targetWidth, gocv.MatTypeCV8UC3)
 	defer bgColor.Close()
 
@@ -196,7 +223,7 @@ func processImage() {
 	defer mask.Close()
 	gocv.InRangeWithScalar(newSize, gocv.NewScalar(0, 0, 0, 0), gocv.NewScalar(255, 255, 255, 0), &mask)
 
-	gocv.CopyToWithMask(newSize, &newImg, mask)
+	newSize.CopyToWithMask(&newImg, mask)
 
 	gocv.AddWeighted(newImg, 1, bgColor, 1, 0, &newImg)
 
