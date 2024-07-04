@@ -102,3 +102,41 @@ func stringCard(s string) (string, error) {
 
 	return s, nil
 }
+
+// 假设我们有一个函数来获取请求中的IP地址
+func getIPFromRequest() string {
+	if ip := os.Getenv("HTTP_CLIENT_IP"); ip != "" {
+		return ip
+	} else if ip := os.Getenv("HTTP_X_FORWARDED_FOR"); ip != "" {
+		return ip
+	} else if ip, _, err := net.SplitHostPort(os.Getenv("REMOTE_ADDR")); err == nil {
+		return ip
+	}
+	return "Unknow"
+}
+
+// matchIP 检查给定的IP是否在允许的IP列表中，或者是否与通配符模式匹配
+func matchIP(ip string, allowedIPs []string) bool {
+	ipParts := strings.Split(ip, ".")
+
+	for _, allowedIP := range allowedIPs {
+		allowedIPParts := strings.Split(allowedIP, ".")
+		match := true
+		for i := range allowedIPParts {
+			if allowedIPParts[i] != "*" && allowedIPParts[i] != ipParts[i] {
+				match = false
+				break
+			}
+		}
+		if match {
+			return true
+		}
+	}
+	return false
+}
+
+// ipTest 函数检查客户端IP是否在允许的IP列表中
+func ipTest(allowedIPs []string) bool {
+	clientIP := getIPFromRequest()
+	return matchIP(clientIP, allowedIPs)
+}
