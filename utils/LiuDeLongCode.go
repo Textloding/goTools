@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"reflect"
 )
 
 // downloadZip 远程下载zip文件
@@ -140,3 +141,34 @@ func ipTest(allowedIPs []string) bool {
 	clientIP := getIPFromRequest()
 	return matchIP(clientIP, allowedIPs)
 }
+// 对象转数组
+func objectArray(v interface{}) interface{} {
+	rv := reflect.ValueOf(v)
+	switch rv.Kind() {
+	case reflect.Slice, reflect.Array:
+		result := make([]interface{}, rv.Len())
+		for i := 0; i < rv.Len(); i++ {
+			result[i] = objectArray(rv.Index(i).Interface())
+		}
+		return result
+	case reflect.Map:
+		result := make(map[interface{}]interface{})
+		for _, key := range rv.MapKeys() {
+			result[key.Interface()] = objectArray(rv.MapIndex(key).Interface())
+		}
+		return result
+	case reflect.Ptr:
+		return objectArray(rv.Elem().Interface())
+	case reflect.Struct:
+		result := make(map[string]interface{})
+		t := rv.Type()
+		for i := 0; i < rv.NumField(); i++ {
+			field := t.Field(i)
+			result[field.Name] = objectArray(rv.Field(i).Interface())
+		}
+		return result
+	default:
+		return v
+	}
+}
+
