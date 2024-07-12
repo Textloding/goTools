@@ -8,6 +8,8 @@ import (
 	"regexp"
 	"strings"
 	"reflect"
+	"errors"
+	"unicode/utf8"
 )
 
 // downloadZip 远程下载zip文件
@@ -171,4 +173,34 @@ func objectArray(v interface{}) interface{} {
 		return v
 	}
 }
+
+// mbStrSplit 分割字符串到指定长度的切片。
+// 如果splitLength小于1，函数将返回错误。
+func mbStrSplit(str string, splitLength int, charset string) ([]string, error) {
+	// 默认字符集为UTF-8，目前Go语言只支持UTF-8编码，因此charset参数被忽略。
+	if splitLength < 1 {
+		return nil, errors.New("split length should be greater than 0")
+	}
+
+	var arr []string
+	for i := 0; i < len(str); {
+		_, size := utf8.DecodeRuneInString(str[i:])
+		if size > splitLength {
+			return nil, errors.New("rune size is larger than split length")
+		}
+		r, _ := utf8.DecodeRuneInString(str[i:])
+		i += size
+		if r == utf8.RuneError {
+			continue // 跳过无效的UTF-8编码
+		}
+		end := i + splitLength
+		if end > len(str) {
+			end = len(str)
+		}
+		arr = append(arr, str[i:end])
+		i = end
+	}
+	return arr, nil
+}
+
 
