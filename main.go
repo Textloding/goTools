@@ -34,9 +34,9 @@ func horJin() {
 	//这里是HorJin提交的数据
 }
 
-func yinHuiLin () {
+func yinHuiLin() {
 	//2023-07-27
-		//今日办公室里顿悟，方知我是我。
+	//今日办公室里顿悟，方知我是我。
 }
 
 func sbLiuBoTao() {
@@ -66,7 +66,7 @@ func shuaiGeZh() {
 	//  我张昊就是个大傻逼
 }
 
-func nobody(){
+func nobody() {
 	//这是一个来自神秘人的神秘代码
 	//s神秘代码被启用
 	//哈哈哈龙哥日记太有节目了
