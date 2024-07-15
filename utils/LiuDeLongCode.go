@@ -10,6 +10,7 @@ import (
 	"reflect"
 	"errors"
 	"unicode/utf8"
+	"time"
 )
 
 // downloadZip 远程下载zip文件
@@ -201,6 +202,41 @@ func mbStrSplit(str string, splitLength int, charset string) ([]string, error) {
 		i = end
 	}
 	return arr, nil
+}
+
+//时间转换函数
+func mdate(t time.Time) string {
+	now := time.Now()
+	if t.IsZero() || t.After(now) {
+		t = now
+	}
+	timestamp := t.Unix()
+
+	diff := now.Unix() - timestamp
+
+	yearDiff := t.Year() - now.Year()
+	switch {
+	case diff == 0:
+		return "刚刚"
+	case diff < 60:
+		return fmt.Sprintf("%d秒前", diff)
+	case diff < 3600:
+		return fmt.Sprintf("%d分钟前", diff/60)
+	case diff < 86400:
+		return fmt.Sprintf("%d小时前", diff/3600)
+	case diff < 259200 && yearDiff == 0: // 3天内且未跨年
+		if diff/86400 == 1 {
+			return fmt.Sprintf("昨天 %s", t.Format("15:04"))
+		} else {
+			return fmt.Sprintf("前天 %s", t.Format("15:04"))
+		}
+	case diff < 2592000 && yearDiff == 0: // 30天内且未跨年
+		return t.Format("01月02日 15:04")
+	case diff < 31536000 && yearDiff == 0: // 一整年且未跨年
+		return t.Format("01月02日")
+	default:
+		return t.Format("2006年01月02日") // 跨年或超过一年
+	}
 }
 
 
