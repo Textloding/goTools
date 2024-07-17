@@ -691,3 +691,71 @@ func articlesEditHandler(w http.ResponseWriter, r *http.Request) {
         checkError(err)
     }
 }
+
+func articlesUpdateHandler(w http.ResponseWriter, r *http.Request) {
+    // 1. 获取 URL 参数
+    id := getRouteVariable("id", r)
+
+    // 2. 读取对应的文章数据
+    _, err := getArticleByID(id)
+
+    // 3. 如果出现错误
+    if err != nil {
+        if err == sql.ErrNoRows {
+            // 3.1 数据未找到
+            w.WriteHeader(http.StatusNotFound)
+            fmt.Fprint(w, "404 文章未找到")
+        } else {
+            // 3.2 数据库错误
+            checkError(err)
+            w.WriteHeader(http.StatusInternalServerError)
+            fmt.Fprint(w, "500 服务器内部错误")
+        }
+    } else {
+        // 4. 未出现错误
+
+        // 4.1 表单验证
+        title := r.PostFormValue("title")
+        body := r.PostFormValue("body")
+
+        errors := validateArticleFormData(title, body)
+
+        if len(errors) == 0 {
+
+            // 4.2 表单验证通过，更新数据
+
+            query := "UPDATE articles SET title = ?, body = ? WHERE id = ?"
+            rs, err := db.Exec(query, title, body, id)
+
+            if err != nil {
+                checkError(err)
+                w.WriteHeader(http.StatusInternalServerError)
+                fmt.Fprint(w, "500 服务器内部错误")
+            }
+
+            // √ 更新成功，跳转到文章详情页
+            if n, _ := rs.RowsAffected(); n > 0 {
+                showURL, _ := router.Get("articles.show").URL("id", id)
+                http.Redirect(w, r, showURL.String(), http.StatusFound)
+            } else {
+                fmt.Fprint(w, "您没有做任何更改！")
+            }
+        } else {
+
+            // 4.3 表单验证不通过，显示理由
+
+            updateURL, _ := router.Get("articles.update").URL("id", id)
+            data := ArticlesFormData{
+                Title:  title,
+                Body:   body,
+                URL:    updateURL,
+                Errors: errors,
+            }
+            tmpl, err := template.ParseFiles("resources/views/articles/edit.gohtml")
+            checkError(err)
+
+            err = tmpl.Execute(w, data)
+            checkError(err)
+        }
+    }
+}
