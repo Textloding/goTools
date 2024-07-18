@@ -759,3 +759,25 @@ func articlesUpdateHandler(w http.ResponseWriter, r *http.Request) {
         }
     }
 }
+
+func articlesIndexHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprint(w, "访问文章列表")
+}
+func articlesCreateHandler(w http.ResponseWriter, r *http.Request) {
+    storeURL, _ := router.Get("articles.store").URL()
+    data := ArticlesFormData{
+        Title:  "",
+        Body:   "",
+        URL:    storeURL,
+        Errors: nil,
+    }
+    tmpl, err := template.ParseFiles("resources/views/articles/create.gohtml")
+    if err != nil {
+        panic(err)
+    }
+
+    err = tmpl.Execute(w, data)
+    if err != nil {
+        panic(err)
+    }
+}
