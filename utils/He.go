@@ -808,3 +808,43 @@ func validateArticleFormData(title string, body string) map[string]string {
 
     return errors
 }
+
+func articlesStoreHandler(w http.ResponseWriter, r *http.Request) {
+
+    title := r.PostFormValue("title")
+    body := r.PostFormValue("body")
+
+    errors := validateArticleFormData(title, body)
+
+    // 检查是否有错误
+    // 检查是否有错误
+    if len(errors) == 0 {
+        lastInsertID, err := saveArticleToDB(title, body)
+        if lastInsertID > 0 {
+            fmt.Fprint(w, "插入成功，ID 为"+strconv.FormatInt(lastInsertID, 10))
+        } else {
+            checkError(err)
+            w.WriteHeader(http.StatusInternalServerError)
+            fmt.Fprint(w, "500 服务器内部错误")
+        }
+    } else {
+
+        storeURL, _ := router.Get("articles.store").URL()
+
+        data := ArticlesFormData{
+            Title:  title,
+            Body:   body,
+            URL:    storeURL,
+            Errors: errors,
+        }
+        tmpl, err := template.ParseFiles("resources/views/articles/create.gohtml")
+        if err != nil {
+            panic(err)
+        }
+
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            panic(err)
+        }
+    }
+}
