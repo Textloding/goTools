@@ -947,3 +947,22 @@ func main() {
 
     http.ListenAndServe(":3000", removeTrailingSlash(router))
 }
+package main
+
+import (
+"fmt"
+"os"
+)
+
+func main() {
+    // 检查命令行参数
+    if len(os.Args) < 2 {
+        fmt.Println("Usage: go run script.go [arguments]")
+        return
+    }
+
+    // 遍历并打印所有命令行参数
+    for index, arg := range os.Args {
+        fmt.Printf("Argument %d: %s\n", index, arg)
+    }
+}
