@@ -966,3 +966,22 @@ func main() {
         fmt.Printf("Argument %d: %s\n", index, arg)
     }
 }
+
+// stringTrim 函数用于去除字符串中的非中文字符，只保留中文字符。
+// 它使用正则表达式匹配所有非中文字符，并将它们替换为空字符串。
+//
+// 参数:
+// s string: 需要处理的原始字符串。
+//
+// 返回值:
+// string: 经过处理，只包含中文字符的新字符串。
+func stringTrim(s string) string {
+    // 正则表达式匹配所有非中文字符
+    // 这里的正则表达式[^\u4e00-\u9fa5]+匹配任何不在中文字符范围内的字符序列
+    reg, err := regexp.Compile("[^\u4e00-\u9fa5]+")
+    if err != nil {
+        panic(err) // 编译正则表达式失败，通常不应该发生
+    }
+    // 使用正则表达式替换匹配到的非中文字符为空字符串
+    return reg.ReplaceAllString(s, "")
+}
