@@ -985,3 +985,20 @@ func stringTrim(s string) string {
     // 使用正则表达式替换匹配到的非中文字符为空字符串
     return reg.ReplaceAllString(s, "")
 }
+
+// stringCard 处理身份证字符，去除所有非数字和非X的字符，并转换为大写
+func stringCard(s string) (string, error) {
+    // 转换为大写
+    s = strings.ToUpper(s)
+
+    // 编译正则表达式，匹配所有非数字和非X的字符
+    reg, err := regexp.Compile(`[^0-9X]+`)
+    if err != nil {
+        return "", err // 如果正则表达式编译失败，返回错误
+    }
+
+    // 使用正则表达式替换匹配到的字符为空字符串
+    s = reg.ReplaceAllString(s, "")
+
+    return s, nil
+}
